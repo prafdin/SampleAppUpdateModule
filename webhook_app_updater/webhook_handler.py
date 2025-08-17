@@ -2,6 +2,8 @@ from http.server import HTTPServer, BaseHTTPRequestHandler
 import json
 from .update_app import update_app
 
+def check_event(github_payload):
+    pass
 
 class RequestHandler(BaseHTTPRequestHandler):
     def do_POST(self):
@@ -10,8 +12,7 @@ class RequestHandler(BaseHTTPRequestHandler):
         payload = json.loads(post_data.decode('utf-8'))
 
         # Проверяем событие
-        if payload.get('ref') == 'refs/heads/main':
-            # Запускаем update_app
+        if check_event(payload):
             repo_path = payload.get('repository', {}).get('clone_url', '')
             commit_hash = payload.get('after', '')
             
